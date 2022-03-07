@@ -232,6 +232,7 @@ export interface SeriesOptionsCommon {
 	scaleMargins?: PriceScaleMargins;
 	/** Panel this series to be added */
 	pane?: number;
+	paneHeight?: number;
 }
 
 export type SeriesOptions<T> = T & SeriesOptionsCommon;
