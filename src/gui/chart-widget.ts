@@ -37,7 +37,8 @@ export type MouseEventParamsImplSupplier = () => MouseEventParamsImpl;
 export class ChartWidget implements IDestroyable {
 	private readonly _options: ChartOptionsInternal;
 	private _paneWidgets: PaneWidget[] = [];
-	private _paneSeparators: PaneSeparator[] = [];
+	// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility,@typescript-eslint/member-ordering
+	paneSeparators: PaneSeparator[] = [];
 	private readonly _model: ChartModel;
 	private _drawRafId: number = 0;
 	private _height: number = 0;
@@ -55,7 +56,6 @@ export class ChartWidget implements IDestroyable {
 
 	public constructor(container: HTMLElement, options: ChartOptionsInternal) {
 		this._options = options;
-
 		this._element = document.createElement('div');
 		this._element.classList.add('tv-lightweight-charts');
 		this._element.style.overflow = 'hidden';
@@ -141,10 +141,10 @@ export class ChartWidget implements IDestroyable {
 		}
 		this._paneWidgets = [];
 
-		for (const paneSeparator of this._paneSeparators) {
+		for (const paneSeparator of this.paneSeparators) {
 			this._destroySeparator(paneSeparator);
 		}
-		this._paneSeparators = [];
+		this.paneSeparators = [];
 
 		ensureNotNull(this._timeAxisWidget).destroy();
 
@@ -233,7 +233,7 @@ export class ChartWidget implements IDestroyable {
 					ctx.drawImage(image, targetX, targetY, priceAxisWidget.getWidth(), paneWidgetHeight);
 					targetY += paneWidgetHeight;
 					if (paneIndex < this._paneWidgets.length - 1) {
-						const separator = this._paneSeparators[paneIndex];
+						const separator = this.paneSeparators[paneIndex];
 						const separatorSize = separator.getSize();
 						const separatorImage = separator.getImage();
 						ctx.drawImage(separatorImage, targetX, targetY, separatorSize.w, separatorSize.h);
@@ -254,7 +254,7 @@ export class ChartWidget implements IDestroyable {
 				ctx.drawImage(image, targetX, targetY, paneWidgetSize.w, paneWidgetSize.h);
 				targetY += paneWidgetSize.h;
 				if (paneIndex < this._paneWidgets.length - 1) {
-					const separator = this._paneSeparators[paneIndex];
+					const separator = this.paneSeparators[paneIndex];
 					const separatorSize = separator.getSize();
 					const separatorImage = separator.getImage();
 					ctx.drawImage(separatorImage, targetX, targetY, separatorSize.w, separatorSize.h);
@@ -343,7 +343,7 @@ export class ChartWidget implements IDestroyable {
 
 		const paneWidth = Math.max(width - leftPriceAxisWidth - rightPriceAxisWidth, 0);
 
-		const separatorCount = this._paneSeparators.length;
+		const separatorCount = this.paneSeparators.length;
 		const separatorHeight = SEPARATOR_HEIGHT;
 		const separatorsHeight = separatorHeight * separatorCount;
 		let timeAxisHeight = this._options.timeScale.visible ? this._timeAxisWidget.optimalHeight() : 0;
@@ -542,7 +542,7 @@ export class ChartWidget implements IDestroyable {
 			paneWidget.clicked().unsubscribeAll(this);
 			paneWidget.destroy();
 
-			const paneSeparator = this._paneSeparators.pop();
+			const paneSeparator = this.paneSeparators.pop();
 			if (paneSeparator !== undefined) {
 				this._destroySeparator(paneSeparator);
 			}
@@ -558,7 +558,7 @@ export class ChartWidget implements IDestroyable {
 			// create and insert separator
 			if (i > 0) {
 				const paneSeparator = new PaneSeparator(this, i - 1, i, false);
-				this._paneSeparators.push(paneSeparator);
+				this.paneSeparators.push(paneSeparator);
 				this._tableElement.insertBefore(paneSeparator.getElement(), this._timeAxisWidget.getElement());
 			}
 

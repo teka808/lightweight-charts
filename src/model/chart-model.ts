@@ -627,6 +627,13 @@ export class ChartModel implements IDestroyable {
 			this.createPane(paneIndex);
 		}
 		const pane = this._panes[paneIndex];
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		if (options.paneHeight > 0) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			pane.setHeight(options.paneHeight);
+		}
 		const series = this._createSeries(options, seriesType, pane);
 		this._serieses.push(series);
 

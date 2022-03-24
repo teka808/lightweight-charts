@@ -141,8 +141,6 @@ export class PaneSeparator implements IDestroyable {
 			this._startY = event.pageY;
 		}
 		this._chartWidget.model().fullUpdate();
-		// eslint-disable-next-line no-console
-		console.log('pane_height', this._paneA, newUpperPaneStretch, this._paneB, newLowerPaneStretch);
 	}
 
 	private _mouseUpEvent(event: TouchMouseEvent): void {
