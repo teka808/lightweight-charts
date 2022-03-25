@@ -340,7 +340,8 @@ export class ChartWidget implements IDestroyable {
 
 		const width = this._width;
 		const height = this._height;
-
+		// eslint-disable-next-line no-console
+		console.log('_adjustSizeImpl', height);
 		const paneWidth = Math.max(width - leftPriceAxisWidth - rightPriceAxisWidth, 0);
 
 		const separatorCount = this.paneSeparators.length;
@@ -355,6 +356,8 @@ export class ChartWidget implements IDestroyable {
 		const otherWidgetHeight = separatorsHeight + timeAxisHeight;
 		const totalPaneHeight = height < otherWidgetHeight ? 0 : height - otherWidgetHeight;
 		const stretchPixels = totalPaneHeight / totalStretch;
+		// eslint-disable-next-line no-console
+		console.log('_adjustSizeImpl: totalPaneHeight', totalPaneHeight);
 
 		let accumulatedHeight = 0;
 
@@ -374,6 +377,9 @@ export class ChartWidget implements IDestroyable {
 			}
 
 			paneHeight = Math.max(calculatePaneHeight, 2);
+
+			// eslint-disable-next-line no-console
+			console.log('_adjustSizeImpl: paneHeight', paneHeight);
 
 			accumulatedHeight += paneHeight;
 
