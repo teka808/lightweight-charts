@@ -306,11 +306,11 @@ export class ChartModel implements IDestroyable {
 		this.recalculateAllPanes();
 	}
 
-	public createPane(index?: number): Pane {
+	public createPane(index?: number, paneHeight?: number): Pane {
 		if (index !== undefined) {
 			if (index > this._panes.length) {
 				for (let i = this._panes.length; i < index; i++) {
-					this.createPane(i);
+					this.createPane(i, this._panes[i].paneHeight());
 				}
 			} else if (index < this._panes.length) {
 				return this._panes[index];
@@ -318,6 +318,9 @@ export class ChartModel implements IDestroyable {
 		}
 
 		const pane = new Pane(this._timeScale, this);
+		if (paneHeight !== undefined && paneHeight !== 0) {
+			pane.setPaneHeight(paneHeight);
+		}
 
 		if (index !== undefined) {
 			this._panes.splice(index, 0, pane);
@@ -623,8 +626,9 @@ export class ChartModel implements IDestroyable {
 
 	public createSeries<T extends SeriesType>(seriesType: T, options: SeriesOptionsMap[T]): Series<T> {
 		const paneIndex = options.pane || 0;
+		const paneHeight = options.paneHeight || 0;
 		if (this._panes.length - 1 <= paneIndex) {
-			this.createPane(paneIndex);
+			this.createPane(paneIndex, paneHeight);
 		}
 		const pane = this._panes[paneIndex];
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment

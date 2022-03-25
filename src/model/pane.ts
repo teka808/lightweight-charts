@@ -33,6 +33,7 @@ export class Pane implements IDestroyable {
 
 	private _height: number = 0;
 	private _width: number = 0;
+	private _paneHeight: number = 0;
 	private _stretchFactor: number = DEFAULT_STRETCH_FACTOR;
 	private _cachedOrderedSources: readonly IPriceDataSource[] | null = null;
 
@@ -129,9 +130,17 @@ export class Pane implements IDestroyable {
 		return this._height;
 	}
 
+	public paneHeight(): number {
+		return this._paneHeight;
+	}
+
 	public setWidth(width: number): void {
 		this._width = width;
 		this.updateAllSources();
+	}
+
+	public setPaneHeight(height: number): void {
+		this._paneHeight = height;
 	}
 
 	public setHeight(height: number): void {
