@@ -318,11 +318,11 @@ export class ChartWidget implements IDestroyable {
 		return ensureNotNull(priceAxisWidget).getWidth();
 	}
 
-	public adjustSize(): void {
-		this._adjustSizeImpl();
+	public adjustSize(force?: boolean): void {
+		this._adjustSizeImpl(force);
 	}
 	// eslint-disable-next-line complexity
-	private _adjustSizeImpl(): void {
+	private _adjustSizeImpl(force?: boolean): void {
 		let totalStretch = 0;
 		let leftPriceAxisWidth = 0;
 		let rightPriceAxisWidth = 0;
@@ -372,7 +372,12 @@ export class ChartWidget implements IDestroyable {
 				calculatePaneHeight = Math.round(paneWidget.stretchFactor() * stretchPixels * pixelRatio) / pixelRatio;
 			}
 
-			paneHeight = Math.max(calculatePaneHeight, 2);
+			// eslint-disable-next-line @typescript-eslint/tslint/config
+			if (!force && paneWidget.state().paneHeight() !== undefined && paneWidget.state().paneHeight() > 0) {
+				paneHeight = paneWidget.state().paneHeight();
+			} else {
+				paneHeight = Math.max(calculatePaneHeight, 2);
+			}
 
 			// eslint-disable-next-line no-console
 			console.log('_adjustSizeImpl: paneHeight', paneHeight, paneWidget.state().paneHeight(), paneWidget);
@@ -578,7 +583,7 @@ export class ChartWidget implements IDestroyable {
 			}
 		}
 		this._updateTimeAxisVisibility();
-		this._adjustSizeImpl();
+		this._adjustSizeImpl(false);
 	}
 
 	private _getMouseEventParamsImpl(index: TimePointIndex | null, point: Point | null): MouseEventParamsImpl {
