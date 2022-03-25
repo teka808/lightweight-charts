@@ -635,7 +635,6 @@ export class ChartModel implements IDestroyable {
 			pane.setHeight(options.paneHeight);
 		}
 		// eslint-disable-next-line no-console
-		console.log('createSeries: pane', pane, options);
 		const series = this._createSeries(options, seriesType, pane);
 		this._serieses.push(series);
 
