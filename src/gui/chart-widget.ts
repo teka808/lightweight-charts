@@ -375,7 +375,7 @@ export class ChartWidget implements IDestroyable {
 			paneHeight = Math.max(calculatePaneHeight, 2);
 
 			// eslint-disable-next-line no-console
-			console.log('_adjustSizeImpl: paneHeight', paneHeight, paneWidget.state(), paneWidget);
+			console.log('_adjustSizeImpl: paneHeight', paneHeight, paneWidget.state().paneHeight(), paneWidget);
 
 			accumulatedHeight += paneHeight;
 
