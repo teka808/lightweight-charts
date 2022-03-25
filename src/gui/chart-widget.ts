@@ -381,6 +381,8 @@ export class ChartWidget implements IDestroyable {
 
 			// eslint-disable-next-line no-console
 			console.log('_adjustSizeImpl: paneHeight', paneHeight, paneWidget.state().paneHeight(), paneWidget);
+			// eslint-disable-next-line no-console,@typescript-eslint/tslint/config
+			console.log('_adjustSizeImpl: force', force, (!force && paneWidget.state().paneHeight() !== undefined && paneWidget.state().paneHeight() > 0));
 
 			accumulatedHeight += paneHeight;
 
